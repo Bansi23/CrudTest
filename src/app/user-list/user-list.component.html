@@ -1,0 +1,170 @@
+<div class="row mx-5 mt-5">
+    <div class="form-group">
+        <div class="col-12 col-md-12">
+            <button class="btn btn-info btn-sm" (click)="addRecord()"><i class="fa fa-plus"></i> Add </button>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-12 col-md-12">
+            <button class="btn btn-danger btn-sm" (click)="deleteSelectedRecord()"><i class="fa fa-trash"> Delete
+                    Selected Rec</i></button>
+        </div>
+    </div>
+</div>
+
+<div class="row mx-5 mt-5">
+    <div class="col-12 col-md-12">
+        <form [formGroup]="custForm">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <tr>
+                        <th colspan="12" style="text-align: center">
+                            <h6>User Data</h6>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Mobile No.</th>
+                        <th>Actions</th>
+                    </tr>
+                    <tbody>
+                        <tr *ngFor="let user of lstUser; let i=index">
+                            <ng-container *ngIf="updateIndex != i; else elseTemplate">
+                                <td><input type="checkbox" [checked]="user?.isSelect"
+                                        (change)="getSelectval($event.target.checked, i)"></td>
+                                <td>{{ user?.fname | titlecase}}</td>
+                                <td>{{ user?.lname | titlecase}}</td>
+                                <td>{{ user?.mono }}</td>
+
+                                <td> <button type="button" class="btn btn-info btn-sm mx-2" (click)="editRecord(i)"><i
+                                            class="fa fa-pencil"></i></button>
+                                    <button class="btn btn-danger btn-sm" (click)="deleteRecord(i)"><i
+                                            class="fa fa-trash"></i></button>
+                                </td>
+                            </ng-container>
+                            <ng-template #elseTemplate>
+                                <td><input type="checkbox" [disabled]="isdisabled"></td>
+                                <td> <input type="text" class="form-control" formControlName="fname"
+                                        [(ngModel)]="user.fname">
+                                    <span class="text-danger"
+                                        *ngIf="custForm.get('fname').hasError('required') && custForm.get('fname').touched">
+                                        This Fiels is required
+                                    </span>
+                                    <span class="text-danger"
+                                        *ngIf="custForm.get('fname').hasError('pattern') && custForm.get('fname').touched">
+                                        Enter Minmimum 2 charecter
+                                    </span></td>
+
+                                <td> <input type="text" class="form-control" formControlName="lname"
+                                        [(ngModel)]="user.lname">
+                                    <span class="text-danger"
+                                        *ngIf="custForm.get('lname').hasError('required') && custForm.get('lname').touched">
+                                        This Fiels is required
+                                    </span>
+                                    <span class="text-danger"
+                                        *ngIf="custForm.get('lname').hasError('pattern') && custForm.get('lname').touched">
+                                        Enter Minmimum 2 charecter, Digit not allowed
+                                    </span></td>
+
+                                <td><input type="text" class="form-control" formControlName="mono"
+                                        [(ngModel)]="user.mono">
+                                    <span class="text-danger"
+                                        *ngIf="custForm.get('mono').hasError('required') && custForm.get('mono').touched">This
+                                        field is required</span>
+                                    <span class="text-danger"
+                                        *ngIf="custForm.get('mono').hasError('pattern') && custForm.get('mono').touched">Enter
+                                        Valid Mobile number max 10 </span>
+                                </td>
+
+
+                                <td> <button class="btn btn-primary fa fa-save " (click)="saveChanges(i)"></button>
+                                    <button type="button" class="btn btn-dark fa fa-remove mx-1"
+                                        (click)="cancelEdit(i)"></button>
+                                </td>
+                            </ng-template>
+
+                        </tr>
+
+                        <tr *ngIf="lstUser?.length == 0">
+                            <td colspan="12">
+                                No Record found
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Modal fade -->
+            <div class="modal fade" #addRecModal="bs-modal" bsModal role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add Record</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                                (click)="close()">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-12 col-lg-6 col-md-6">
+                                    <div class="form-group">
+                                        <label>First Name</label>
+                                        <input type="text" class="form-control" formControlName="fname">
+                                        <span class="text-danger"
+                                            *ngIf="custForm.get('fname').hasError('required') && custForm.get('fname').touched">
+                                            This Fiels is required
+                                        </span>
+                                        <span class="text-danger"
+                                            *ngIf="custForm.get('fname').hasError('pattern') && custForm.get('fname').touched">
+                                            Enter Minmimum 2 charecter
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-lg-6 col-md-6">
+                                    <div class="form-group">
+                                        <label>Last Name</label>
+                                        <input type="text" class="form-control" formControlName="lname">
+                                        <span class="text-danger"
+                                            *ngIf="custForm.get('lname').hasError('required') && custForm.get('lname').touched">
+                                            This Fiels is required
+                                        </span>
+                                        <span class="text-danger"
+                                            *ngIf="custForm.get('lname').hasError('pattern') && custForm.get('lname').touched">
+                                            Enter Minmimum 2 charecter
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-lg-6 col-md-6">
+                                    <div class="form-group">
+                                        <label>Mobile Number</label>
+                                        <input type="text" class="form-control" formControlName="mono">
+                                        <span class="text-danger"
+                                            *ngIf="custForm.get('mono').hasError('required') && custForm.get('mono').touched">
+                                            This Fiels is required
+                                        </span>
+                                        <span class="text-danger"
+                                            *ngIf="custForm.get('mono').hasError('pattern') && custForm.get('mono').touched">
+                                            Enter Valid Mobile Number
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn btn-danger float-left btn-sm" (click)="close()">Close</button>
+                            <button class="btn btn-primary btn-sm" (click)="saveRecord()">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- modal end -->
+
+        </form>
+    </div>
+</div>
