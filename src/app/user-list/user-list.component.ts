@@ -37,16 +37,16 @@ export class UserListComponent implements OnInit {
     this.AddModalpopup.hide();
   }
   deleteSelectedRecord() {
-    if (this.lstUser.length != 0) {
-      const list = this.lstUser.filter(x => x.isSelect == false);
-      if (list.length != 0) {
-        this.lstUser = list;
-      } else {
-        alert('Select at list one record!')
-      }
+    if (this.lstUser.length === 0) {
+      alert('No record found!');
     }
     else {
-      alert('No record found!');
+      const list = this.lstUser.filter(x => x.isSelect == false);
+      if (list.length !== 0) {
+        alert('Select at list one record!')
+      } else {
+          this.lstUser = list;
+      }
     }
   }
 
