@@ -19,19 +19,11 @@
         <form [formGroup]="custForm">
             <div class="table-responsive">
                 <table class="table table-bordered table-striped">
-                    <tr>
-                        <th colspan="12" style="text-align: center">
-                            <h6>User Data</h6>
-                        </th>
-                    </tr>
-                    <tr>
-                        <th></th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Mobile No.</th>
-                        <th>Email</th>
-                        <th>Actions</th>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th *ngFor="let h of lstHeader">{{h | titlecase}}</th>
+                        </tr>
+                    </thead>
                     <tbody>
                         <tr *ngFor="let user of lstUser; let i=index">
                             <ng-container *ngIf="updateIndex != i; else elseTemplate">
@@ -91,7 +83,6 @@
                                         *ngIf="custForm.get('email').hasError('pattern') && custForm.get('email').touched">Enter
                                         Valid Email Address </span>
                                 </td>
-
 
                                 <td> <button class="btn btn-primary fa fa-save " (click)="saveChanges(i)"></button>
                                     <button type="button" class="btn btn-dark fa fa-remove mx-1"

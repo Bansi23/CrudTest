@@ -19,7 +19,7 @@ export class UserListComponent implements OnInit {
   updateIndex: number = -1;
   editData: any = null;
   isdisabled: boolean = true;
-
+  lstHeader: any =  ['', 'First Name', 'Last Name', 'Mobile No.', 'Email', 'Actions']
 
   fbValidation() {
     this.custForm = this.fb.group({
@@ -53,7 +53,6 @@ export class UserListComponent implements OnInit {
   }
 
   getSelectval(evt, i) {
-
     let data = this.lstUser[i];
     //this.lstUser[i] = this.getData(data, evt);
     this.lstUser[i] = {
