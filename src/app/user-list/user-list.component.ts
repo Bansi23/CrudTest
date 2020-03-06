@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CommonService } from '../common.service';
+import { environment } from 'src/environments/environment';
+const emailPattern = environment.emailPattern;
 
 @Component({
   selector: 'app-user-list',
@@ -21,10 +23,10 @@ export class UserListComponent implements OnInit {
 
   fbValidation() {
     this.custForm = this.fb.group({
-      // id: [''],
       fname: [null, Validators.compose([Validators.required, Validators.pattern('[A-Za-z]{2,}')])],
       lname: [null, Validators.compose([Validators.required, Validators.pattern('[A-Za-z]{2,}')])],
       mono: [null, Validators.compose([Validators.required, Validators.pattern('[0-9]\\d{9}')])],
+      email: [null, Validators.compose([Validators.required, Validators.pattern(emailPattern)])],
     });
   }
 
@@ -43,7 +45,7 @@ export class UserListComponent implements OnInit {
     else {
       const list = this.lstUser.filter(x => x.isSelect == false);
       if (list.length !== 0) {
-        alert('Select at list one record!')
+        alert('Select at list one record!');
       } else {
         this.lstUser = list;
       }
@@ -51,11 +53,15 @@ export class UserListComponent implements OnInit {
   }
 
   getSelectval(evt, i) {
+
     let data = this.lstUser[i];
+    //this.lstUser[i] = this.getData(data, evt);
     this.lstUser[i] = {
       id: data.id,
       fname: data.fname,
       lname: data.lname,
+      mono: data.mono,
+      email: data.email,
       isSelect: evt
     };
   }
@@ -80,25 +86,24 @@ export class UserListComponent implements OnInit {
     }
   }
 
-  editRecord(i) {
+  getData(data, evt?) {
+    let d = {
+      id: data.id,
+      fname: data.fname,
+      lname: data.lname,
+      mono: data.mono,
+      email: data.email,
+      isselect: evt ? evt : data.isSelect
+    };
+    return d;
+  }
 
+  editRecord(i) {
     this.updateIndex = i;
     if (i > -1) {
       let data = this.lstUser[i];
-      this.lstUser[i] = {
-        id: data.id,
-        fname: data.fname,
-        lname: data.lname,
-        mono: data.mono,
-        isselect: data.isselect
-      };
-      this.editData = {
-        id: data.id,
-        fname: data.fname,
-        lname: data.lname,
-        mono: data.mono,
-        isselect: data.isselect
-      };
+      this.lstUser[i] = this.getData(data);
+      this.editData = this.getData(data);
     };
   }
 
@@ -108,13 +113,7 @@ export class UserListComponent implements OnInit {
     }
     if (this.custForm.valid) {
       let data = this.lstUser[i];
-      this.lstUser[i] = {
-        id: data.id,
-        fname: data.fname,
-        lname: data.lname,
-        mono: data.mono,
-        isselect: data.isselect
-      };
+      this.lstUser[i] = this.getData(data);
       this.updateIndex = -1;
     }
   }

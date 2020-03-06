@@ -1,12 +1,14 @@
 <div class="row mx-5 mt-5">
     <div class="form-group">
         <div class="col-12 col-md-12">
-            <button class="btn btn-info btn-sm" (click)="addRecord()" [disabled]= "updateIndex != -1"><i class="fa fa-plus"></i> Add </button>
+            <button class="btn btn-info btn-sm" (click)="addRecord()" [disabled]="updateIndex > -1 ? true : false"><i
+                    class="fa fa-plus"></i> Add </button>
         </div>
     </div>
     <div class="form-group">
         <div class="col-12 col-md-12">
-            <button class="btn btn-danger btn-sm" (click)="deleteSelectedRecord()" [disabled]= "updateIndex != -1"><i class="fa fa-trash"> Delete
+            <button class="btn btn-danger btn-sm" (click)="deleteSelectedRecord()"
+                [disabled]="updateIndex > -1 ? true : false"><i class="fa fa-trash"> Delete
                     Selected Rec</i></button>
         </div>
     </div>
@@ -27,6 +29,7 @@
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Mobile No.</th>
+                        <th>Email</th>
                         <th>Actions</th>
                     </tr>
                     <tbody>
@@ -37,15 +40,18 @@
                                 <td>{{ user?.fname | titlecase}}</td>
                                 <td>{{ user?.lname | titlecase}}</td>
                                 <td>{{ user?.mono }}</td>
+                                <td>{{user?.email}}</td>
 
-                                <td> <button type="button" class="btn btn-info btn-sm mx-2" (click)="editRecord(i)"><i
+                                <td> <button type="button" class="btn btn-info btn-sm mx-2" (click)="editRecord(i)"
+                                        [disabled]="updateIndex > -1 ? true : false"><i
                                             class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-sm" (click)="deleteRecord(i)"><i
+                                    <button class="btn btn-danger btn-sm" (click)="deleteRecord(i)"
+                                        [disabled]="updateIndex > -1 ? true : false"><i
                                             class="fa fa-trash"></i></button>
                                 </td>
                             </ng-container>
                             <ng-template #elseTemplate>
-                                <td><input type="checkbox" [disabled]="isdisabled"></td>
+                                <td><input type="checkbox" *ngIf="updateIndex != i"></td>
                                 <td> <input type="text" class="form-control" formControlName="fname"
                                         [(ngModel)]="user.fname">
                                     <span class="text-danger"
@@ -76,6 +82,14 @@
                                     <span class="text-danger"
                                         *ngIf="custForm.get('mono').hasError('pattern') && custForm.get('mono').touched">Enter
                                         Valid Mobile number max 10 </span>
+                                </td>
+                                <td> <input type="text" formControlName="email" [(ngModel)]=user.email>
+                                    <span class="tect-danger"
+                                        *ngIf="custForm.get('email').hasError('required') && custForm.get('email').touched">This
+                                        field is required</span>
+                                    <span class="text-danger"
+                                        *ngIf="custForm.get('email').hasError('pattern') && custForm.get('email').touched">Enter
+                                        Valid Email Address </span>
                                 </td>
 
 
@@ -149,6 +163,21 @@
                                         <span class="text-danger"
                                             *ngIf="custForm.get('mono').hasError('pattern') && custForm.get('mono').touched">
                                             Enter Valid Mobile Number
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-lg-6 col-md-6">
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input type="text" class="form-control" formControlName="email">
+                                        <span class="text-danger"
+                                            *ngIf="custForm.get('email').hasError('required') && custForm.get('email').touched">
+                                            This Fiels is required
+                                        </span>
+                                        <span class="text-danger"
+                                            *ngIf="custForm.get('mono').hasError('pattern') && custForm.get('mono').touched">
+                                            Enter Valid Email Adress
                                         </span>
                                     </div>
                                 </div>

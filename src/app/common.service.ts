@@ -7,7 +7,7 @@ export class CommonService {
 
   custInfo() {
     return [
-      { 'id': 1, 'fname': 'bansi', 'lname': 'patel', 'mono': 1234567890 }
+      { 'id': 1, 'fname': 'bansi', 'lname': 'patel', 'mono': 1234567890 , 'email' : 'bansi29@gmail.com'}
     ]
   }
 
