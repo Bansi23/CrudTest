@@ -21,7 +21,7 @@ export class UserListComponent implements OnInit {
 
   fbValidation() {
     this.custForm = this.fb.group({
-      id: [''],
+      // id: [''],
       fname: [null, Validators.compose([Validators.required, Validators.pattern('[A-Za-z]{2,}')])],
       lname: [null, Validators.compose([Validators.required, Validators.pattern('[A-Za-z]{2,}')])],
       mono: [null, Validators.compose([Validators.required, Validators.pattern('[0-9]\\d{9}')])],
@@ -45,7 +45,7 @@ export class UserListComponent implements OnInit {
       if (list.length !== 0) {
         alert('Select at list one record!')
       } else {
-          this.lstUser = list;
+        this.lstUser = list;
       }
     }
   }
@@ -81,16 +81,19 @@ export class UserListComponent implements OnInit {
   }
 
   editRecord(i) {
+
     this.updateIndex = i;
     if (i > -1) {
       let data = this.lstUser[i];
       this.lstUser[i] = {
+        id: data.id,
         fname: data.fname,
         lname: data.lname,
         mono: data.mono,
         isselect: data.isselect
       };
       this.editData = {
+        id: data.id,
         fname: data.fname,
         lname: data.lname,
         mono: data.mono,
@@ -106,6 +109,7 @@ export class UserListComponent implements OnInit {
     if (this.custForm.valid) {
       let data = this.lstUser[i];
       this.lstUser[i] = {
+        id: data.id,
         fname: data.fname,
         lname: data.lname,
         mono: data.mono,
