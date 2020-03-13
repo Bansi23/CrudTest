@@ -16,6 +16,13 @@
 
 <div class="row mx-5 mt-5">
     <div class="col-12 col-md-12">
+        <div class="row">
+            <div class="col-6 col-md-6">
+                <input class="form-control mb-3" type="text" name="search" [(ngModel)]="filter"
+                    placeholder="Search by word...">
+            </div>
+        </div>
+
         <form [formGroup]="custForm">
             <div class="table-responsive">
                 <table class="table table-bordered table-striped">
@@ -25,7 +32,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let user of lstUser; let i=index">
+                        <tr
+                            *ngFor="let user of lstUser | filter:filter | paginate: { itemsPerPage: pageSize, currentPage: p }; let i=index">
                             <ng-container *ngIf="updateIndex != i; else elseTemplate">
                                 <td><input type="checkbox" [checked]="user?.isSelect"
                                         (change)="getSelectval($event.target.checked, i)"></td>
@@ -41,6 +49,7 @@
                                         [disabled]="updateIndex > -1 ? true : false"><i
                                             class="fa fa-trash"></i></button>
                                 </td>
+
                             </ng-container>
                             <ng-template #elseTemplate>
                                 <td><input type="checkbox" *ngIf="updateIndex != i"></td>
@@ -167,7 +176,7 @@
                                             This Fiels is required
                                         </span>
                                         <span class="text-danger"
-                                            *ngIf="custForm.get('mono').hasError('pattern') && custForm.get('mono').touched">
+                                            *ngIf="custForm.get('email').hasError('pattern') && custForm.get('email').touched">
                                             Enter Valid Email Adress
                                         </span>
                                     </div>
@@ -186,5 +195,27 @@
             <!-- modal end -->
 
         </form>
+
+        <div class="row">
+            <div class="col-md-4 col-12" *ngIf="(lstUser).length > 0">
+                <p>Total Record : {{lstUser.length}}</p>
+            </div>
+
+            <div class="col-md-4 col-12" *ngIf="(lstUser).length > 0">
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+
+            <div class="col-md-4 col-12" *ngIf="(lstUser).length > 0">
+                <div class="text-left pagignation-select">
+                    <select class="form-control" [(ngModel)]="pageSize" (change)="pageChanged($event.target.value)">
+                        <option value="2">2</option>
+                        <option value="4">4</option>
+                        <option value="6">6</option>
+                        <option value="8">8</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

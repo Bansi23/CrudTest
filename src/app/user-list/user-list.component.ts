@@ -20,6 +20,13 @@ export class UserListComponent implements OnInit {
   editData: any = null;
   isdisabled: boolean = true;
   lstHeader: any =  ['', 'First Name', 'Last Name', 'Mobile No.', 'Email', 'Actions']
+  filter : any;
+  p: number = 1;
+
+  pageIndex: number = 1;
+  pageSize: number = 2;
+
+
 
   fbValidation() {
     this.custForm = this.fb.group({
@@ -44,7 +51,8 @@ export class UserListComponent implements OnInit {
     }
     else {
       const list = this.lstUser.filter(x => x.isSelect == false);
-      if (list.length !== 0) {
+      const listTrue = this.lstUser.filter(x => x.isSelect == true);
+      if (listTrue.length == 0) {
         alert('Select at list one record!');
       } else {
         this.lstUser = list;
@@ -126,6 +134,10 @@ export class UserListComponent implements OnInit {
   deleteRecord(i) {
     this.lstUser.splice(i, 1)
   }
+
+  pageChanged(value) {
+    this.pageIndex = +value;
+  };
 
   constructor(private fb: FormBuilder, private _cS: CommonService) { }
 
