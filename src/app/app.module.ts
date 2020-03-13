@@ -9,6 +9,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap';
 import { UserListComponent } from './user-list/user-list.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {ToasterModule, ToasterService} from 'angular2-toaster';
 
 @NgModule({
   declarations: [
@@ -23,10 +25,13 @@ import {NgxPaginationModule} from 'ngx-pagination';
     ModalModule.forRoot(),
     BsDatepickerModule.forRoot(),
     Ng2SearchPipeModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    BrowserAnimationsModule,
+    ToasterModule.forRoot(),
+
 
   ],
-  providers: [],
+  providers: [ToasterService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

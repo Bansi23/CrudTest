@@ -19,12 +19,15 @@ export class UserListComponent implements OnInit {
   updateIndex: number = -1;
   editData: any = null;
   isdisabled: boolean = true;
-  lstHeader: any =  ['', 'First Name', 'Last Name', 'Mobile No.', 'Email', 'Actions']
-  filter : any;
+  lstHeader: any = ['', 'First Name', 'Last Name', 'Mobile No.', 'Email', 'Actions']
+  filter: any;
   p: number = 1;
 
   pageIndex: number = 1;
   pageSize: number = 2;
+
+
+  title = 'toaster';
 
 
 
@@ -89,6 +92,7 @@ export class UserListComponent implements OnInit {
           x.isSelect = this.isChecked;
         });
       }
+      this._cS.displayToaster(1, 'Added record successfuly');
       this.close();
     }
   }
@@ -121,6 +125,7 @@ export class UserListComponent implements OnInit {
     if (this.custForm.valid) {
       let data = this.lstUser[i];
       this.lstUser[i] = this.getData(data);
+      this._cS.displayToaster(1, 'Updated record successfuly');
       this.updateIndex = -1;
     }
   }
@@ -132,7 +137,8 @@ export class UserListComponent implements OnInit {
   }
 
   deleteRecord(i) {
-    this.lstUser.splice(i, 1)
+    this.lstUser.splice(i, 1);
+    this._cS.displayToaster(2, 'Delete record successfuly');
   }
 
   pageChanged(value) {
