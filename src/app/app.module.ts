@@ -11,6 +11,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {ToasterModule, ToasterService} from 'angular2-toaster';
+import { NgxLoadingModule, ngxLoadingAnimationTypes } from 'ngx-loading';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,14 @@ import {ToasterModule, ToasterService} from 'angular2-toaster';
     NgxPaginationModule,
     BrowserAnimationsModule,
     ToasterModule.forRoot(),
+    NgxLoadingModule.forRoot({
+      animationType: ngxLoadingAnimationTypes.wanderingCubes,
+      backdropBackgroundColour: 'rgba(0,0,0,0.1)', 
+      backdropBorderRadius: '4px',
+      primaryColour: '#FF6347	', 
+      secondaryColour: '#0000CD', 
+      tertiaryColour: '#000'
+  })
 
 
   ],

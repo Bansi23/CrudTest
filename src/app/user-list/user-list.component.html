@@ -41,6 +41,7 @@
                                 <td>{{ user?.lname | titlecase}}</td>
                                 <td>{{ user?.mono }}</td>
                                 <td>{{user?.email}}</td>
+                                
 
                                 <td> <button type="button" class="btn btn-info btn-sm mx-2" (click)="editRecord(i)"
                                         [disabled]="updateIndex > -1 ? true : false"><i
@@ -187,13 +188,13 @@
 
                         <div class="modal-footer">
                             <button class="btn btn-danger float-left btn-sm" (click)="close()">Close</button>
-                            <button class="btn btn-primary btn-sm" (click)="saveRecord()">Save</button>
+                            <button class="btn btn-info btn-sm" (click)="saveRecord()">Save</button>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- modal end -->
-
+           
         </form>
 
         <div class="row">
@@ -217,8 +218,8 @@
                     </select>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
+

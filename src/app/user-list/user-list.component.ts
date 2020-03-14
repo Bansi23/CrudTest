@@ -3,6 +3,9 @@ import { ModalDirective } from 'ngx-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CommonService } from '../common.service';
 import { environment } from 'src/environments/environment';
+import { interval } from 'rxjs';
+import { take, map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 const emailPattern = environment.emailPattern;
 
 @Component({
@@ -22,6 +25,7 @@ export class UserListComponent implements OnInit {
   lstHeader: any = ['', 'First Name', 'Last Name', 'Mobile No.', 'Email', 'Actions']
   filter: any;
   p: number = 1;
+  public loading = false;
 
   pageIndex: number = 1;
   pageSize: number = 2;
@@ -81,6 +85,8 @@ export class UserListComponent implements OnInit {
       this.custForm.controls[i].markAllAsTouched();
     }
     if (this.custForm.valid) {
+      this.loading = true;
+    setTimeout(() => {
       const formVal = this.custForm.value;
       const index = this.lstUser.findIndex(x => x.id == formVal.id);
       if (index > -1) {
@@ -94,6 +100,8 @@ export class UserListComponent implements OnInit {
       }
       this._cS.displayToaster(1, 'Added record successfuly');
       this.close();
+      this.loading = false;
+    }, 2000);
     }
   }
 
@@ -119,6 +127,7 @@ export class UserListComponent implements OnInit {
   }
 
   saveChanges(i) {
+
     for (const i in this.custForm.controls) {
       this.custForm.controls[i].markAllAsTouched();
     }
@@ -145,7 +154,61 @@ export class UserListComponent implements OnInit {
     this.pageIndex = +value;
   };
 
-  constructor(private fb: FormBuilder, private _cS: CommonService) { }
+  // resetDiscount() {
+  //   this._cS.displayToaster(2,'Enter valid Discount');
+  //   this.discountForm.get('discount').setValue('');
+  // }
+
+  // currencyCheck() {
+  //   const currencyCode = this.discountForm.get('_currencyCode').value;
+  //   const discount = this.discountForm.get('discount').value;
+
+  //   if (discount != undefined || discount != '' || discount != null) {
+  //     const length = discount.toString().length;
+  //     if (currencyCode != null) {
+  //       if (currencyCode.name == '%') {
+  //         if (discount >= 100) {
+  //           this.resetDiscount();
+  //         }
+  //       }
+  //       else if (currencyCode.name == '$') {
+  //         if (length > 4) {
+  //           this.resetDiscount();
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+
+  // goSearch() {
+  //   const searchData = this.searching.value;
+  //   if (searchData === '' || this.searching.invalid) {
+  //     this.lstDiscount = this.discountInfo;
+  //   } else {
+  //     this.data = this.discountInfo;
+  //     let filtered = this.data.filter(
+  //       x => x.name.toLocaleLowerCase().replace(/ /g, '').includes(searchData.toLocaleLowerCase().replace(/ /g, ''))
+  //         || x.code.toLocaleLowerCase().replace(/ /g, '').includes(searchData.toLocaleLowerCase().replace(/ /g, ''))
+  //         || x.startDate.toLocaleLowerCase().replace(/ /g, '').includes(searchData.toLocaleLowerCase().replace(/ /g, ''))
+  //         || x.expiryDate.toLocaleLowerCase().replace(/ /g, '').includes(searchData.toLocaleLowerCase().replace(/ /g, ''))
+  //     );
+  //     this.lstDiscount = filtered;
+  //     if (filtered.length === 0) {
+  //       this.notify.error('no record found.');
+  //     }
+  //   }
+  // }
+
+
+  fun() {
+    interval(0)
+    .pipe(
+      take(1), 
+    ).subscribe(value => 
+      this._router.navigate(['account/login']));
+   }
+
+  constructor(private fb: FormBuilder, private _cS: CommonService, private _router : Router) { }
 
   ngOnInit() {
     this.lstUser = this._cS.custInfo();
