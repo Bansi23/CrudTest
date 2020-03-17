@@ -14,6 +14,23 @@
     </div>
 </div>
 
+
+<div class="col-md-4 offset-md-2">
+    <label for="Activity" class="report-box--label">Activity Type</label>
+    <angular2-multiselect id="Activity" [data]="filterType" [(ngModel)]="selectedItems"
+      class="form-control multiselect-box" [settings]="dropdownSettings" (onSelect)="onItemSelect($event)"
+      (onDeSelect)="onItemSelect($event)" (onSelectAll)="onItemSelect($event)"
+      (onDeSelectAll)="onItemSelect($event)">
+      <ng-container *ngIf="filterType?.length == selectedItems?.length">
+        <c-badge>
+          <ng-template let-item="item">
+            <label style="margin: 0px; padding-right: 5px;">All</label>
+          </ng-template>
+        </c-badge>
+      </ng-container>
+    </angular2-multiselect>
+  </div>
+
 <div class="row mx-5 mt-5">
     <div class="col-12 col-md-12">
         <div class="row">
@@ -221,5 +238,5 @@
         </div>
     </div>
 </div>
-<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }" [template]="customLoadingTemplate"></ngx-loading>
+<ngx-loading [show]="loading" [config]="{ backdropBorderRadius: '3px' }"></ngx-loading>
 

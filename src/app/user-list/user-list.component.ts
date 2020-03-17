@@ -199,18 +199,96 @@ export class UserListComponent implements OnInit {
   //   }
   // }
 
+  // filterType = [
+  //   { "id": 1, "itemName": "Energy" },
+  //   { "id": 2, "itemName": "Mood" },
+  //   { "id": 3, "itemName": "Sleep Time" },
+  //   { "id": 4, "itemName": "Pain" },
+  //   // { "id": 5, "itemName": "Sex" },
+  //   { "id": 6, "itemName": "Pee" },
+  //   { "id": 7, "itemName": "Stool" },
+  //   { "id": 8, "itemName": "Beverage" },
+  //   { "id": 9, "itemName": "Thermal Activities" },
+  //   { "id": 10, "itemName": "Medications" },
+  //   { "id": 11, "itemName": "Food" },
+  //   { "id": 12, "itemName": "Quality of Sleep" },
+  //   { "id": 13, "itemName": "Glucose Level" },
+  //   { "id": 14, "itemName": "Blood Pressure" },
+  //   { "id": 15, "itemName": "Temperature" },
+  //   { "id": 16, "itemName": "Oxygen (Saturation)" },
+  //   { "id": 17, "itemName": "Heart Rate" },
+  //   { "id": 18, "itemName": "Stress Level" },
+  //   { "id": 19, "itemName": "User Weight" }
 
-  fun() {
-    interval(0)
-    .pipe(
-      take(1), 
-    ).subscribe(value => 
-      this._router.navigate(['account/login']));
-   }
+  // ];
+
+  // selectedItems: any = [];
+
+  // onItemSelect(item?: any) {
+  //   const selectedData = this.selectedItems.map((x: { itemName: any; }) => { return x.itemName });
+  //   var filtered = this.data.filter(
+  //     function (e) { return this.indexOf(e.type) != -1; }, selectedData);
+  //   this.lstdiaryData = filtered;
+  //   setTimeout(() => {
+  //     this.hideDropdownNumbers();
+  //   });
+  // }
+
+  // GetRecord() {
+  //   if (!this.selectEndDate.value) {
+  //     this.lstdiaryData = [];
+  //     this._notify.error('Please select end date')
+  //   }
+  //   let start = moment(this.selectStartDate.value).format('YYYY-MM-DD')
+  //   let end = moment(this.selectEndDate.value).format('YYYY-MM-DD')
+  //   if (this.selectEndDate.value) {
+  //     this._cS.API_GET(this._cS.getDiaryDetails(start, end))
+  //       .subscribe(response => {
+  //         if (response) {
+  //           this.selectedItems = this.filterType.map(x => { return { id: x.id, itemName: x.itemName } });
+  //           this.lstdiaryData = [];
+  //           this.data = response;
+  //           this.onItemSelect();
+  //         }
+  //       }, err => {
+  //         this._cS.getError(err);
+  //       });
+  //   }
+  // }
+
+
+  // hideDropdownNumbers() {
+  //   const drpClass = <HTMLElement>document.querySelector('.countplaceholder');
+  //   if (drpClass) {
+  //     if (this.filterType.length == this.selectedItems.length) {
+  //       drpClass.style.display = 'none';
+  //     } else {
+  //       drpClass.style.display = 'block';
+  //     }
+  //   };
+  // };
+
+
+  // fun() {
+  //   interval(0)
+  //   .pipe(
+  //     take(1), 
+  //   ).subscribe(value => 
+  //     this._router.navigate(['account/login']));
+  //  }
 
   constructor(private fb: FormBuilder, private _cS: CommonService, private _router : Router) { }
 
   ngOnInit() {
+      //multiselect
+    // this.filterType.map(x => {
+    //   this.selectedItems.push(x);
+    // });
+    // setTimeout(() => {
+    //   this.hideDropdownNumbers();
+    // }, 100);
+
+    //end
     this.lstUser = this._cS.custInfo();
     this.lstUser.map(x => {
       x.isSelect = this.isChecked;
